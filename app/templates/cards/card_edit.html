@@ -1,0 +1,145 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags i18n %}
+
+{% block title %}{% trans "Edit card" %} — {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <h1 class="h3 mb-2">{% trans "Edit your contact card" %}</h1>
+        <p class="text-muted small mb-4">
+            <a href="{% url 'logout' %}">{% trans "Sign out" %}</a>
+        </p>
+        <p class="text-muted">
+            {% trans "Your public page:" %}
+            <a href="/{{ card.slug }}/" target="_blank">/{{ card.slug }}/</a>
+        </p>
+
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+            {% endif %}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {% trans "Please correct the errors in the form below." %}
+                </div>
+            {% endif %}
+            {% if formset.non_form_errors %}
+                <div class="alert alert-danger">{{ formset.non_form_errors }}</div>
+            {% endif %}
+            {% if formset.errors %}
+                <div class="alert alert-danger">
+                    {% trans "Please correct the errors in the links section." %}
+                </div>
+            {% endif %}
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header"><strong>{% trans "Profile" %}</strong></div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+                            {{ form.title }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="{{ form.company.id_for_label }}">{{ form.company.label }}</label>
+                            {{ form.company }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="{{ form.bio.id_for_label }}">{{ form.bio.label }}</label>
+                            {{ form.bio }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="{{ form.photo.id_for_label }}">{{ form.photo.label }}</label>
+                            {{ form.photo }}
+                            {% if card.photo %}
+                                <div class="mt-2">
+                                    <img src="{{ card.photo.url }}" alt="{% trans 'Current photo' %}" class="edit-photo-preview rounded">
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header"><strong>{% trans "Contact" %}</strong></div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+                            {{ form.phone }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="{{ form.website.id_for_label }}">{{ form.website.label }}</label>
+                            {{ form.website }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <strong>{% trans "Social & links" %}</strong>
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="add-link">{% trans "Add link" %}</button>
+                </div>
+                <div class="card-body" id="link-formset">
+                    {{ formset.management_form }}
+                    {% for link_form in formset %}
+                        <div class="link-form-row border rounded p-3 mb-3{% if link_form.errors %} border-danger{% endif %}">
+                            {% for hidden in link_form.hidden_fields %}{{ hidden }}{% endfor %}
+                            {% if link_form.errors %}
+                                <div class="text-danger small mb-2">{{ link_form.errors }}</div>
+                            {% endif %}
+                            <div class="row g-2 align-items-end">
+                                <div class="col-md-3">
+                                    <label class="form-label">{{ link_form.preset.label }}</label>
+                                    {{ link_form.preset }}
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">{{ link_form.label.label }}</label>
+                                    {{ link_form.label }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">{{ link_form.url.label }}</label>
+                                    {{ link_form.url }}
+                                </div>
+                                <div class="col-md-2 text-end">
+                                    {% if link_form.DELETE %}
+                                        <div class="visually-hidden">{{ link_form.DELETE }}</div>
+                                        <button type="button" class="btn btn-sm btn-outline-danger delete-link-btn">
+                                            {% trans "Delete" %}
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-cta">{% trans "Save card" %}</button>
+            <a href="/{{ card.slug }}/" class="btn btn-outline-secondary ms-2" target="_blank">{% trans "Preview" %}</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/card_edit.js' %}"></script>
+{% endblock %}

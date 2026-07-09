@@ -1,0 +1,8 @@
+Django~=4.2
+psycopg2-binary
+environs
+django-crispy-forms
+crispy-bootstrap5
+Pillow
+qrcode[pil]
+gunicorn

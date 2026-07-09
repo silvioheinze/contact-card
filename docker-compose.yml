@@ -1,0 +1,32 @@
+services:
+  app:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./app:/usr/src/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: contactcard
+      POSTGRES_USER: contactcard
+      POSTGRES_PASSWORD: contactcard
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./app/staticfiles:/home/app/web/staticfiles
+      - ./app/media:/home/app/web/media
+    depends_on:
+      - app
+
+volumes:
+  postgres_data:

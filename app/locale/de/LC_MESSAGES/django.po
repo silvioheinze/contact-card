@@ -1,0 +1,322 @@
+# German translations for contact-card.
+# Copyright (C) 2026
+# This file is distributed under the same license as the contact-card project.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: contact-card\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-13 12:00+0000\n"
+"PO-Revision-Date: 2026-06-13 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: accounts/forms.py
+msgid "Email address"
+msgstr "E-Mail-Adresse"
+
+#: accounts/services.py
+msgid "Your login link"
+msgstr "Dein Anmeldelink"
+
+#: accounts/services.py
+#, python-format
+msgid ""
+"Click the link below to sign in. This link expires in %(minutes)s "
+"minutes.\n"
+"\n"
+"%(link)s\n"
+msgstr ""
+"Klicke auf den Link, um dich anzumelden. Dieser Link läuft in "
+"%(minutes)s Minuten ab.\n"
+"\n"
+"%(link)s\n"
+
+#: accounts/services.py
+msgid "Invalid or expired login link."
+msgstr "Ungültiger oder abgelaufener Anmeldelink."
+
+#: accounts/services.py
+msgid "Invalid login link."
+msgstr "Ungültiger Anmeldelink."
+
+#: accounts/services.py
+msgid "Account slug mismatch."
+msgstr "Benutzername stimmt nicht überein."
+
+#: accounts/views.py
+msgid "Could not send login email. Please try again later."
+msgstr "Anmelde-E-Mail konnte nicht gesendet werden. Bitte versuchen Sie es später erneut."
+
+#: accounts/views.py
+msgid ""
+"If your email is allowed, a login link has been sent. Check your inbox."
+msgstr ""
+"Wenn deine E-Mail-Adresse berechtigt ist, hast du einen Anmeldelink bekommen. "
+"Schaue in deinen Posteingang."
+
+#: accounts/views.py
+msgid "You are now signed in."
+msgstr "Sie sind jetzt angemeldet."
+
+#: accounts/views.py
+msgid "You have been signed out."
+msgstr "Du hast dich abgemeldet."
+
+#: cards/forms.py
+msgid "First name"
+msgstr "Vorname"
+
+#: cards/forms.py
+msgid "Last name"
+msgstr "Nachname"
+
+#: cards/forms.py
+msgid "Job title"
+msgstr "Funktion"
+
+#: cards/forms.py
+msgid "Company"
+msgstr "Organisationsteil"
+
+#: cards/forms.py
+msgid "Phone"
+msgstr "Telefon"
+
+#: cards/forms.py
+msgid "Email"
+msgstr "E-Mail"
+
+#: cards/forms.py
+msgid "Website"
+msgstr "Website"
+
+#: cards/forms.py
+msgid "Bio"
+msgstr "Biografie"
+
+#: cards/forms.py
+msgid "Photo"
+msgstr "Foto"
+
+#: cards/forms.py
+msgid "Image must be smaller than 2 MB."
+msgstr "Das Bild muss kleiner als 2 MB sein."
+
+#: cards/forms.py
+msgid "Platform"
+msgstr "Plattform"
+
+#: cards/forms.py
+msgid "Label"
+msgstr "Bezeichnung"
+
+#: cards/forms.py
+msgid "URL"
+msgstr "URL"
+
+#: cards/forms.py
+msgid "Custom"
+msgstr "Benutzerdefiniert"
+
+#: cards/forms.py
+msgid "Label is required when URL is set."
+msgstr "Bezeichnung ist erforderlich, wenn eine URL angegeben ist."
+
+#: cards/vcard.py
+msgid "Contact Card"
+msgstr "Kontaktkarte"
+
+#: main/util.py
+#, python-format
+msgid "Only email addresses from @%(domain)s are allowed."
+msgstr "Nur E-Mail-Adressen von @%(domain)s sind erlaubt."
+
+#: main/util.py
+#, python-format
+msgid "\"%(slug)s\" is a reserved name."
+msgstr "\"%(slug)s\" ist ein reservierter Name."
+
+#: main/util.py
+msgid ""
+"Username must start with a letter or number and contain only letters, "
+"numbers, dots, underscores, or hyphens."
+msgstr ""
+"Der Benutzername muss mit einem Buchstaben oder einer Zahl beginnen und darf "
+"nur Buchstaben, Zahlen, Punkte, Unterstriche oder Bindestriche enthalten."
+
+#: site_settings/forms.py
+msgid "Site name"
+msgstr "Website-Name"
+
+#: site_settings/forms.py
+msgid "Logo"
+msgstr "Logo"
+
+#: site_settings/forms.py
+msgid "Primary color"
+msgstr "Primärfarbe"
+
+#: site_settings/forms.py
+msgid "Accent color"
+msgstr "Akzentfarbe"
+
+#: site_settings/forms.py
+msgid "Background"
+msgstr "Hintergrund"
+
+#: site_settings/forms.py
+msgid "Footer text"
+msgstr "Fußzeilentext"
+
+#: site_settings/forms.py
+msgid "Logo must be smaller than 2 MB."
+msgstr "Das Logo muss kleiner als 2 MB sein."
+
+#: site_settings/models.py
+msgid "Contact Cards"
+msgstr "Kontaktkarten"
+
+#: site_settings/models.py
+msgid "Site settings"
+msgstr "Website-Einstellungen"
+
+#: site_settings/models.py
+msgid "Site settings cannot be deleted."
+msgstr "Website-Einstellungen können nicht gelöscht werden."
+
+#: site_settings/views.py
+msgid "Site settings saved."
+msgstr "Website-Einstellungen gespeichert."
+
+#: templates/accounts/login.html
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: templates/accounts/login.html
+msgid "Enter your work email. We'll send you a one-time login link."
+msgstr "Gib deine Grüne E-Mail-Adresse ein. Du bekommst einen einmaligen Anmeldelink."
+
+#: templates/accounts/login.html
+msgid "Send login link"
+msgstr "Anmeldelink senden"
+
+#: templates/cards/card_detail.html
+msgid "Call"
+msgstr "Anrufen"
+
+#: templates/cards/card_detail.html
+msgid "Download vCard"
+msgstr "vCard herunterladen"
+
+#: templates/cards/card_detail.html
+msgid "QR code"
+msgstr "QR-Code"
+
+msgid "Enlarge QR code"
+msgstr "QR-Code vergrößern"
+
+#: templates/cards/card_detail.html
+msgid "Scan to share"
+msgstr "Zum Teilen scannen"
+
+#: templates/cards/card_edit.html
+msgid "Edit card"
+msgstr "Karte bearbeiten"
+
+#: templates/cards/card_edit.html
+msgid "Edit your contact card"
+msgstr "Kontaktkarte bearbeiten"
+
+#: templates/cards/card_edit.html
+msgid "Sign out"
+msgstr "Abmelden"
+
+#: templates/cards/card_edit.html
+msgid "Your public page:"
+msgstr "Deine öffentliche Seite:"
+
+#: templates/cards/card_edit.html
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/cards/card_edit.html
+msgid "Current photo"
+msgstr "Aktuelles Foto"
+
+#: templates/cards/card_edit.html
+msgid "Contact"
+msgstr "Kontakt"
+
+#: templates/cards/card_edit.html
+msgid "Social & links"
+msgstr "Social Media & Links"
+
+#: templates/cards/card_edit.html
+msgid "Add link"
+msgstr "Link hinzufügen"
+
+#: templates/cards/card_edit.html
+msgid "Del"
+msgstr "Löschen"
+
+msgid "Delete"
+msgstr "Löschen"
+
+#: templates/cards/card_edit.html
+msgid "Save card"
+msgstr "Karte speichern"
+
+msgid "Card saved."
+msgstr "Karte gespeichert."
+
+msgid "Please correct the errors in the form below."
+msgstr "Bitte korrigiere die Fehler im Formular."
+
+msgid "Please correct the errors in the links section."
+msgstr "Bitte korrigiere die Fehler im Bereich Social Media & Links."
+
+#: templates/cards/card_edit.html
+msgid "Preview"
+msgstr "Vorschau"
+
+#: templates/home.html
+msgid "Home"
+msgstr "Startseite"
+
+#: templates/home.html
+msgid "Personal contact cards for Grüne Neubau. Sign in with your green party email to create and edit your cards."
+msgstr "Persönliche Kontaktkarten für die Grünen Neubau. Melde dich mit deiner grünen E-Mail an, um deine Karte zu erstellen und bearbeiten."
+
+#: templates/home.html
+msgid "Edit my card"
+msgstr "Meine Karte bearbeiten"
+
+#: templates/home.html
+msgid "View my card"
+msgstr "Meine Karte ansehen"
+
+#: templates/home.html
+msgid "Sign in with email"
+msgstr "Mit E-Mail anmelden"
+
+#: templates/site_settings/settings.html
+msgid "Customize the look of all contact cards."
+msgstr "Passen Sie das Erscheinungsbild aller Kontaktkarten an."
+
+#: templates/site_settings/settings.html
+msgid "Current logo"
+msgstr "Aktuelles Logo"
+
+#: templates/site_settings/settings.html
+msgid "Save settings"
+msgstr "Einstellungen speichern"
+
+#: templates/site_settings/settings.html
+msgid "Product Designer"
+msgstr "Produktdesigner"

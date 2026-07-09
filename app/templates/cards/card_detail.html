@@ -1,0 +1,95 @@
+{% extends "_base.html" %}
+{% load card_tags i18n %}
+
+{% block title %}{{ card.display_name|default:card.slug }} — {{ site_settings.site_name }}{% endblock %}
+{% block main_class %}card-page py-4{% endblock %}
+
+{% block content %}
+<div class="contact-card mx-auto">
+    <div class="card shadow-sm border-0">
+        <div class="card-header card-cover text-center py-4">
+            {% if card.photo %}
+                <img src="{{ card.photo.url }}" alt="{{ card.display_name }}" class="profile-photo rounded-circle">
+            {% else %}
+                <div class="profile-photo profile-photo-placeholder rounded-circle mx-auto">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+            {% endif %}
+            <h1 class="h3 mt-3 mb-1">{{ card.display_name|default:card.slug }}</h1>
+            {% if card.title %}
+                <p class="mb-0 card-cover-subtitle">{{ card.title }}</p>
+            {% endif %}
+            {% if card.company %}
+                <p class="mb-0 text-center">{{ card.company }}</p>
+            {% endif %}
+        </div>
+        <div class="card-body p-4">
+            {% if card.bio %}
+                <p class="text-center card-bio mb-4">{{ card.bio|linebreaksbr }}</p>
+            {% endif %}
+
+            <div class="d-grid gap-2 action-buttons mb-4">
+                {% if card.phone %}
+                    <a href="{{ card.phone|tel_href }}" class="btn btn-primary">
+                        <i class="bi bi-telephone me-2"></i>{% trans "Call" %}
+                    </a>
+                {% endif %}
+                {% if card.email %}
+                    <a href="mailto:{{ card.email }}" class="btn btn-outline-primary">
+                        <i class="bi bi-envelope me-2"></i>{% trans "Email" %}
+                    </a>
+                {% endif %}
+                {% if card.website %}
+                    <a href="{{ card.website }}" class="btn btn-outline-primary" target="_blank" rel="noopener">
+                        <i class="bi bi-globe me-2"></i>{% trans "Website" %}
+                    </a>
+                {% endif %}
+            </div>
+
+            {% if card.links.all %}
+                <div class="social-links d-flex flex-wrap justify-content-center gap-2 mb-4">
+                    {% for link in card.links.all %}
+                        <a href="{{ link.url }}" class="btn btn-social" target="_blank" rel="noopener" title="{{ link.label }}">
+                            <i class="bi {{ link.label|link_icon }}"></i>
+                            <span class="visually-hidden">{{ link.label }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="d-flex justify-content-center align-items-center gap-4 flex-wrap">
+                <a href="{% url 'cards:vcard' slug=card.slug %}" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-person-vcard me-1"></i>{% trans "Download vCard" %}
+                </a>
+                <div class="text-center">
+                    <button
+                        type="button"
+                        class="qr-code-trigger border-0 bg-transparent p-0"
+                        aria-expanded="false"
+                        aria-controls="qr-code-overlay"
+                        aria-label="{% trans 'Enlarge QR code' %}"
+                    >
+                        <img src="{% url 'cards:qr' slug=card.slug %}" alt="{% trans 'QR code' %}" class="qr-code" width="120" height="120">
+                    </button>
+                    <div class="small text-muted mt-1">{% trans "Scan to share" %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="qr-code-overlay" class="qr-code-overlay" hidden role="dialog" aria-modal="true" aria-label="{% trans 'QR code' %}">
+    <img
+        src="{% url 'cards:qr' slug=card.slug %}"
+        alt="{% trans 'QR code' %}"
+        class="qr-code-overlay-image"
+        width="480"
+        height="480"
+    >
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/card_detail.js' %}"></script>
+{% endblock %}

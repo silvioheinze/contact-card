@@ -1,0 +1,76 @@
+{% extends "_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Site settings" %} — {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6">
+        <h1 class="h3 mb-2">{% trans "Site settings" %}</h1>
+        <p class="text-muted small mb-2">
+            <a href="{% url 'logout' %}">{% trans "Sign out" %}</a>
+        </p>
+        <p class="text-muted mb-4">{% trans "Customize the look of all contact cards." %}</p>
+
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.site_name.id_for_label }}">{{ form.site_name.label }}</label>
+                        {{ form.site_name }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.logo.id_for_label }}">{{ form.logo.label }}</label>
+                        {{ form.logo }}
+                        {% if site_settings.logo %}
+                            <div class="mt-2">
+                                <img src="{{ site_settings.logo.url }}" alt="{% trans 'Current logo' %}" height="40">
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label" for="{{ form.primary_color.id_for_label }}">{{ form.primary_color.label }}</label>
+                            {{ form.primary_color }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="{{ form.accent_color.id_for_label }}">{{ form.accent_color.label }}</label>
+                            {{ form.accent_color }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="{{ form.background_color.id_for_label }}">{{ form.background_color.label }}</label>
+                            {{ form.background_color }}
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label" for="{{ form.footer_text.id_for_label }}">{{ form.footer_text.label }}</label>
+                        {{ form.footer_text }}
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-cta">{% trans "Save settings" %}</button>
+        </form>
+    </div>
+    <div class="col-lg-6">
+        <h2 class="h5 mb-3">{% trans "Preview" %}</h2>
+        <div class="preview-panel p-4 rounded" style="background: var(--bg);">
+            <div class="contact-card mx-auto">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header card-cover text-center py-4">
+                        <div class="profile-photo profile-photo-placeholder rounded-circle mx-auto">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <h3 class="h5 mt-3">Jane Doe</h3>
+                        <p class="mb-0 text-muted">{% trans "Product Designer" %}</p>
+                    </div>
+                    <div class="card-body text-center">
+                        <a class="btn btn-primary btn-sm" href="#">{% trans "Call" %}</a>
+                        <a class="btn btn-outline-primary btn-sm ms-1" href="#">{% trans "Email" %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

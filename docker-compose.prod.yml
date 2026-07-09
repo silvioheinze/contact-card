@@ -1,0 +1,40 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py migrate &&
+             gunicorn main.wsgi:application --bind 0.0.0.0:8000"
+    env_file:
+      - .env
+    volumes:
+      - media_data:/usr/src/app/media
+      - static_data:/usr/src/app/staticfiles
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: contactcard
+      POSTGRES_USER: contactcard
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-contactcard}
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - static_data:/home/app/web/staticfiles
+      - media_data:/home/app/web/media
+    depends_on:
+      - app
+
+volumes:
+  postgres_data:
+  media_data:
+  static_data:

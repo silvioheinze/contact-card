@@ -1,0 +1,24 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags i18n %}
+
+{% block title %}{% trans "Sign in" %} — {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h4 mb-3">{% trans "Sign in" %}</h1>
+                <p class="text-muted small mb-4">
+                    {% trans "Enter your work email. We'll send you a one-time login link." %}
+                </p>
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-cta w-100 mt-2">{% trans "Send login link" %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
