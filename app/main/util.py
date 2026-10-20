@@ -1,4 +1,6 @@
 import re
+import secrets
+import string
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -6,6 +8,8 @@ from django.utils.translation import gettext_lazy as _
 
 
 SLUG_PATTERN = re.compile(r'^[a-z0-9][a-z0-9._-]*$')
+SLUG_ID_ALPHABET = string.ascii_lowercase + string.digits
+SLUG_ID_LENGTH = 6
 
 
 def normalize_email(email):
@@ -46,8 +50,19 @@ def validate_slug(slug):
     return slug
 
 
-def slug_from_email(email):
+def generate_slug_id():
+    return ''.join(
+        secrets.choice(SLUG_ID_ALPHABET) for _ in range(SLUG_ID_LENGTH)
+    )
+
+
+def slug_base_from_email(email):
     return validate_slug(email_local_part(normalize_email(email)))
+
+
+def slug_from_email(email):
+    base = slug_base_from_email(email)
+    return f'{base}-{generate_slug_id()}'
 
 
 def normalize_url(url):

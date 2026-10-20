@@ -6,7 +6,7 @@ from accounts.services import build_magic_link, send_magic_link_email
 from django.core import mail
 from django.contrib.auth import get_user_model
 
-from main.util import slug_from_email, validate_allowed_domain
+from main.util import SLUG_ID_LENGTH, slug_from_email, validate_allowed_domain, validate_slug
 from django.core.exceptions import ValidationError
 
 
@@ -23,9 +23,13 @@ class DomainValidationTests(TestCase):
 
 class SlugTests(TestCase):
     def test_slug_from_email(self):
-        self.assertEqual(slug_from_email('John.Doe@Example.com'), 'john.doe')
+        slug = slug_from_email('John.Doe@Example.com')
+        pattern = rf'^john\.doe-[a-z0-9]{{{SLUG_ID_LENGTH}}}$'
+        self.assertRegex(slug, pattern)
 
     def test_reserved_slug_rejected(self):
+        with self.assertRaises(ValidationError):
+            validate_slug('login')
         with self.assertRaises(ValidationError):
             slug_from_email('login@example.com')
 
@@ -47,7 +51,16 @@ class MagicLinkTests(TestCase):
     def test_user_and_card_created_on_verify_flow(self):
         user, created = get_or_create_user_from_email('new@example.com')
         self.assertTrue(created)
-        self.assertEqual(user.slug, 'new')
+        self.assertRegex(user.slug, rf'^new-[a-z0-9]{{{SLUG_ID_LENGTH}}}$')
+
+    @override_settings(ALLOWED_EMAIL_DOMAIN='example.com')
+    def test_existing_user_keeps_slug_on_return_login(self):
+        user, created = get_or_create_user_from_email('returning@example.com')
+        self.assertTrue(created)
+        slug = user.slug
+        user2, created2 = get_or_create_user_from_email('returning@example.com')
+        self.assertFalse(created2)
+        self.assertEqual(user2.slug, slug)
 
     @override_settings(
         ALLOWED_EMAIL_DOMAIN='example.com',

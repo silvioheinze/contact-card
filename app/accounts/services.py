@@ -8,7 +8,12 @@ from django.core.mail import send_mail
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from main.util import slug_from_email, validate_allowed_domain
+from main.util import (
+    normalize_email,
+    slug_base_from_email,
+    slug_from_email,
+    validate_allowed_domain,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -50,13 +55,23 @@ def load_magic_link_email(token, max_age=None):
     return email
 
 
+def _unique_slug_for_email(email):
+    User = get_user_model()
+    for _ in range(100):
+        slug = slug_from_email(email)
+        if not User.objects.filter(slug=slug).exists():
+            return slug
+    raise ValueError(_('Could not generate a unique account slug.'))
+
+
 def get_or_create_user_from_email(email):
     User = get_user_model()
-    slug = slug_from_email(email)
+    email = normalize_email(email)
+    slug_prefix = f'{slug_base_from_email(email)}-'
     user, created = User.objects.get_or_create(
         email=email,
-        defaults={'slug': slug, 'is_active': True},
+        defaults={'slug': _unique_slug_for_email(email), 'is_active': True},
     )
-    if not created and user.slug != slug:
+    if not created and not user.slug.startswith(slug_prefix):
         raise ValueError(_('Account slug mismatch.'))
     return user, created

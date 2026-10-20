@@ -5,7 +5,7 @@ Dockerized Django app for team contact cards with passwordless magic-link login.
 ## Features
 
 - Magic-link login for users with email addresses from a configured domain
-- Personal public page at `/{email-local-part}/`
+- Personal public page at `/{email-local-part}-{id}/` (stable random id per card)
 - Card editor for contact info and social links
 - vCard download and QR code on each card
 - Superuser site settings for logo, colors, and footer text
